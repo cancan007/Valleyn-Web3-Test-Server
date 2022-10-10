@@ -1,22 +1,26 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
-import { InjectEthersProvider, BaseProvider, EthersSigner, Wallet, EthersContract } from 'nestjs-ethers';
+import { InjectEthersProvider, BaseProvider, EthersSigner, Wallet, EthersContract, InjectSignerProvider, InjectContractProvider } from 'nestjs-ethers';
 import { configuration } from 'src/config/configuration';
-import mapJson from "../config/map.json";
-import ID from "../config/artifacts/contracts/ID.sol/ID.json";
+import * as mapJson from "../config/map.json";
+import * as ID from "../config/artifacts/contracts/ID.sol/ID.json";
 
 @Injectable()
 export class Web3Service {
     constructor(
         @InjectEthersProvider()
         private readonly ethersProvider: BaseProvider,
-        private readonly signer: EthersSigner,  // already include BaseProvider
+        @InjectSignerProvider()
+        private readonly ethersSigner: EthersSigner,  // already include BaseProvider
+        @InjectContractProvider()
         private readonly ethersContract: EthersContract,  // already include BaseProvider
       ) {}
 
     async getSigner():Promise<Wallet>{
-        const signer= this.signer.createWallet(configuration().PRIVATEKEY);
+        //console.log(this.ethersProvider)
+        const signer= this.ethersSigner.createWallet(configuration().PRIVATEKEY);
+        //console.log(signer)
         return signer;
     }
 
