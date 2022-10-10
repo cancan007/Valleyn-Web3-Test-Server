@@ -25,7 +25,20 @@ async function main() {
   let mapJsonSt = JSON.stringify(mapJson);
 
   fs.writeFileSync('./map.json', mapJsonSt)
+  fs.writeFileSync('../backend/src/config/map.json', mapJsonSt);
   console.log("Updated map.json");
+
+  if (fs.existsSync("../backend/src/config/artifacts")) {
+    await fse.remove("../backend/src/config/artifacts")
+      .then(() => console.log("deleted ../backend/src/config/artifacts"))
+      .catch((err) => console.error(err))
+    fse.copySync("./artifacts", "../backend/src/config/artifacts")
+    console.log("Updated ../backend/src/config/artifacts")
+    return
+  }
+
+  fse.copySync("./artifacts", "../backend/src/config/artifacts")
+  console.log("Created ../backend/src/config/artifacts")
 }
 
 // We recommend this pattern to be able to use async/await everywhere
