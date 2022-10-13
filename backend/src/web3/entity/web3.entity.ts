@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 
 
-export interface UserInfo{
-    userNumber:number;
+export interface User{
+    userNum:number;
     userId:string;
-    userIc:string;
     name:string;
-    createdTime:number;
+}
+
+export interface Item{
+    tokenId:number;
+    ic:string;
+    ownerId:string;
+    txTime:number;
 }

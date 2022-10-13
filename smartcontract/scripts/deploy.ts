@@ -5,9 +5,11 @@ import mapJson from "../map.json";
 
 async function main() {
   const secretNum = 385;
+  /*
   const ID = await ethers.getContractFactory("ID");
   const id = await ID.deploy(secretNum);
   await id.deployed();
+  */
   const VTAdmin = await ethers.getContractFactory("VTAdmin");
   const vtAdmin = await VTAdmin.deploy(secretNum);
   await vtAdmin.deployed();
@@ -18,14 +20,14 @@ async function main() {
   //mapJson = JSON.parse(mapJson);
   if(!mapJson[chainKey]){
     mapJson[chainKey] = {
-      "ID":[],
+      //"ID":[],
       "VTAdmin":[]
     }
   }else if(!mapJson[chainKey]["VTAdmin"]){
     mapJson[chainKey]["VTAdmin"] = [];
   }
   console.log(mapJson)
-  mapJson[chainKey]["ID"].push(id.address);
+  //mapJson[chainKey]["ID"].push(id.address);
   mapJson[chainKey]["VTAdmin"].push(vtAdmin.address);
   let mapJsonSt = JSON.stringify(mapJson);
 

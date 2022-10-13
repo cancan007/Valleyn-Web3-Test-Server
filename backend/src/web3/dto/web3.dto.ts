@@ -1,12 +1,14 @@
 /* eslint-disable prettier/prettier */
-export class CreateUserInfo{
+export class AddUser{
     name:string;
 }
 
-export class FetchUserInfoById{
+export class CreateToken{
+    tokenURI:string;
     id:string;
 }
 
-export class FetchUserInfoByIc{
+export class ChangeOwner{
     ic:string;
+    id:string;
 }

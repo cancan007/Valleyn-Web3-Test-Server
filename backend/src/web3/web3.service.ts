@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
-import { InjectEthersProvider, BaseProvider, EthersSigner, Wallet, EthersContract, InjectSignerProvider, InjectContractProvider } from 'nestjs-ethers';
+import { InjectEthersProvider, BaseProvider, EthersSigner, Wallet, EthersContract, InjectSignerProvider, InjectContractProvider, Contract } from 'nestjs-ethers';
 import { configuration } from 'src/config/configuration';
 import * as mapJson from "../config/map.json";
 import * as ID from "../config/artifacts/contracts/ID.sol/ID.json";
+import * as VTAdmin from "../config/artifacts/contracts/VTAdmin.sol/VTAdmin.json";
 
 @Injectable()
 export class Web3Service {
@@ -24,10 +25,10 @@ export class Web3Service {
         return signer;
     }
 
-    async getContract(){
+    async getContract():Promise<Contract>{
         const {chainId} = await this.ethersProvider.getNetwork()
         const chainKey = chainId as unknown as keyof typeof mapJson
-        const contract = this.ethersContract.create(mapJson[chainKey]["ID"].slice(-1)[0], ID.abi);
+        const contract = this.ethersContract.create(mapJson[chainKey]["VTAdmin"].slice(-1)[0], VTAdmin.abi);
         return contract;
     }
 };

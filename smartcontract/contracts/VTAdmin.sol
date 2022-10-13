@@ -107,6 +107,16 @@ contract VTAdmin is ReentrancyGuard, Ownable, ERC721URIStorage{
         emit Transaction(item.tokenId, item.ic, _id, block.timestamp);
     }
 
+    function fetchUserById(bytes32 _id) public view returns(User memory){
+        require(confirmId(_id), "This userID is invalid");
+        uint256 currentUserNum = _userNums.current();
+        for(uint256 i=0; i<currentUserNum; i++){
+            if(users[i+1].userId == _id){
+                return users[i+1];
+            }
+        }
+    }
+
     function fetchItemsById(bytes32 _id)public view returns(Item[] memory){
         require(confirmId(_id), "This userID is invalid");
         uint256 itemsNum = _tokenIds.current();
