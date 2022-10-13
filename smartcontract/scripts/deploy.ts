@@ -8,20 +8,25 @@ async function main() {
   const ID = await ethers.getContractFactory("ID");
   const id = await ID.deploy(secretNum);
   await id.deployed();
+  const VTAdmin = await ethers.getContractFactory("VTAdmin");
+  const vtAdmin = await VTAdmin.deploy(secretNum);
+  await vtAdmin.deployed();
 
   const {chainId} = await ethers.provider.getNetwork();
-
-  //let mapJson:any = fs.readFileSync("./map.json");
   
   const chainKey = chainId as keyof typeof mapJson
   //mapJson = JSON.parse(mapJson);
   if(!mapJson[chainKey]){
     mapJson[chainKey] = {
-      "ID":[]
+      "ID":[],
+      "VTAdmin":[]
     }
+  }else if(!mapJson[chainKey]["VTAdmin"]){
+    mapJson[chainKey]["VTAdmin"] = [];
   }
   console.log(mapJson)
   mapJson[chainKey]["ID"].push(id.address);
+  mapJson[chainKey]["VTAdmin"].push(vtAdmin.address);
   let mapJsonSt = JSON.stringify(mapJson);
 
   fs.writeFileSync('./map.json', mapJsonSt)
