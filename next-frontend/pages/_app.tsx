@@ -1,9 +1,12 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Link from "next/link"
+import {Provider} from "react-redux"
+import store from '../store/store'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+    <Provider store={store}>
     <div>
       <nav className='border-b p-6'>
         <p className="text-4xl font-bold p-5">Valleyin Auction</p>
@@ -23,10 +26,16 @@ function MyApp({ Component, pageProps }: AppProps) {
               My Items
             </a>
           </Link>
+          <Link href="/admin">
+          <a className='mr-6 text-pink-500'>
+            Admin
+          </a>
+          </Link>
         </div>
       </nav>
       <Component {...pageProps} />
-    </div>)
+    </div>
+    </Provider>)
 }
 
 export default MyApp

@@ -13,14 +13,24 @@ export class Web3Controller {
     async fetchAllUserInfo():Promise<Array<User>>{
         const signer = await this.web3Service.getSigner();
         const contract = await this.web3Service.getContract();
-        const users = await contract.connect(signer).fetchAllUsers();
+        let users = await contract.connect(signer).fetchAllUsers();
+        users = users.map((user:any)=>{
+            return({
+                userNum:user.userNum,
+                userId:user.userId,
+                name:user.name
+            })
+        }) 
         return users;
     }
 
     @Get("users/:id")
     async fetchUserInfoById(@Param("id") id:string):Promise<User>{
         const contract = await this.web3Service.getContract();
-        const user = await contract.fetchUserById(id);
+        let user = await contract.fetchUserById(id);
+        user = {userNum:user.userNum,
+            userId:user.userId,
+            name:user.name}
         return user;
     }
 
