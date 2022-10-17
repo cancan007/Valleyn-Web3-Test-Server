@@ -5,10 +5,12 @@ import { configuration } from './config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  
   if(configuration().NODE_ENV === "development"){
     app.enableCors({
-      origin:["http://localhost:3000"],
-      allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
+      credentials:true,
+      origin:["http://localhost:3000", "http://localhost:3001"],
+      /*allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'*/
     })
   } else if(configuration().NODE_ENV === "production"){
     app.enableCors(/*{

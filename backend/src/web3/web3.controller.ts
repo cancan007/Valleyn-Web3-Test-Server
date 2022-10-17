@@ -52,7 +52,7 @@ export class Web3Controller {
         return items;
     }
 
-    @Post("items")
+    @Post("create-token")
     async createToken(@Body() body:CreateToken):Promise<any>{
         const signer = await this.web3Service.getSigner();
         const contract = await this.web3Service.getContract();

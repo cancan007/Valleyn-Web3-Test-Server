@@ -1,11 +1,16 @@
-import '../styles/globals.css'
+import 'src/styles/globals.css'
 import type { AppProps } from 'next/app'
 import Link from "next/link"
 import {Provider} from "react-redux"
-import store from '../store/store'
+import store from 'src/hooks/store';
+import {QueryClient, QueryClientProvider} from "react-query"
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const queryClient = new QueryClient();
+
   return (
+    <QueryClientProvider client={queryClient}>
     <Provider store={store}>
     <div>
       <nav className='border-b p-6'>
@@ -35,7 +40,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       </nav>
       <Component {...pageProps} />
     </div>
-    </Provider>)
+    </Provider>
+    </QueryClientProvider>)
 }
 
 export default MyApp

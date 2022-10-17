@@ -4,8 +4,9 @@ import ipfs from "ipfs-http-client";
 import { create as ipfsHttpClient} from "ipfs-http-client"  // to connect IPFS
 import {useEffect, useState} from "react";
 import { useDropzone } from "react-dropzone";
+import { useAPIPostTokenUriAndId } from "src/hooks/api/add-item/useAPIPostTokenUriAndId";
 import { isReadable } from "stream";
-import { sendIPFSInfo } from "../store/interactions";
+import { sendIPFSInfo } from "../../store/interactions";
 
 const client = ipfsHttpClient("/ip4/127.0.0.1/tcp/5002")
 
@@ -46,6 +47,12 @@ export const AddItemPage = () => {
         return result
     }*/
 
+    const postTokenUriAndUserId = useAPIPostTokenUriAndId({
+        onSuccess:(result)=>{
+            alert(result)
+        }
+    })
+
     const upload = async()=>{
         await addFile();
         if(!info || !info.image || !info.name || !info.description || !id){
@@ -54,7 +61,7 @@ export const AddItemPage = () => {
         }
         const data = await client.add(info);
         const url = `https://ipfs.io/ipfs/${data.cid}`;
-        await sendIPFSInfo(url, id);
+        postTokenUriAndUserId.mutate({tokenUri:url, id})
     }
 
     const addFile = async()=>{
