@@ -8,7 +8,8 @@ import { useAPIPostTokenUriAndId } from "src/hooks/api/add-item/useAPIPostTokenU
 import { isReadable } from "stream";
 import { sendIPFSInfo } from "../../store/interactions";
 
-const client = ipfsHttpClient("/ip4/127.0.0.1/tcp/5002")
+//const client = ipfsHttpClient("/ip4/127.0.0.1/tcp/5002")
+const client = ipfsHttpClient("/ip4/127.0.0.1/tcp/5001");
 
 type InfoType = {
     image?:string;
@@ -59,9 +60,12 @@ export const AddItemPage = () => {
             console.log("Fill all forms")
             return;
         }
-        const data = await client.add(info);
+        const infoJson = JSON.stringify(info);
+        const data = await client.add(infoJson);
         const url = `https://ipfs.io/ipfs/${data.cid}`;
+        console.log(url)
         postTokenUriAndUserId.mutate({tokenUri:url, id})
+        //await sendIPFSInfo(url, id)
     }
 
     const addFile = async()=>{

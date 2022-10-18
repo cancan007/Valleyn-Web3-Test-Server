@@ -15,8 +15,12 @@ yarn add react-router-dom
 yarn add react-dropzone
 
 #https://github.com/ipfs-inactive/js-ipfs-http-client#running-the-daemon-with-the-right-port
+
+#http://docs.ipfs.tech.ipns.localhost:8080/install/command-line/#official-distributions
 yarn add ipfs
+npx ipfs config Addresses.API
 yarn add ipfs-http-client
 npx ipfs init
 npx ipfs daemon
+npx ipfs config Addresses.API
 npx ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin  '["http://localhost:3000"]'
