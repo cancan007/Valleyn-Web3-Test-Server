@@ -13,3 +13,7 @@ export interface Item{
     ownerId:string;
     txTime:number;
 }
+
+export interface NftTokenUri{
+    tokenURI: string
+}

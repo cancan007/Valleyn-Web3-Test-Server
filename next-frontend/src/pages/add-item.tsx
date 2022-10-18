@@ -64,7 +64,7 @@ export const AddItemPage = () => {
         const data = await client.add(infoJson);
         const url = `https://ipfs.io/ipfs/${data.cid}`;
         console.log(url)
-        postTokenUriAndUserId.mutate({tokenUri:url, id})
+        postTokenUriAndUserId.mutate({tokenURI:url, id})
         //await sendIPFSInfo(url, id)
     }
 

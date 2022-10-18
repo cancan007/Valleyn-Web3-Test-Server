@@ -5,16 +5,18 @@ import { jsonHeader } from "src/utils/url/header";
 
 
 interface PostTokenUriAndIdProps{
-    tokenUri:string;
+    tokenURI:string;
     id:string;
 }
 
-const postTokenUriAndId = async({tokenUri,id}:PostTokenUriAndIdProps)=>{
-    const body = {tokenUri,id}
+const postTokenUriAndId = async({tokenURI,id}:PostTokenUriAndIdProps)=>{
+    const body = {tokenURI,id}
+    const bodyJson = JSON.stringify(body)
     const headers = jsonHeader;
     const response = await axiosInstance.post(
         postTokenUriAndIdURL, 
-        {headers, body}
+        body,
+        { headers}
     );
     return response.data;
 }
