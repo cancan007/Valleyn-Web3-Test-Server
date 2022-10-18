@@ -10,7 +10,7 @@ interface PostTokenUriAndIdProps{
 }
 
 const postTokenUriAndId = async({tokenUri,id}:PostTokenUriAndIdProps)=>{
-    const body = JSON.stringify({tokenUri,id})
+    const body = {tokenUri,id}
     const headers = jsonHeader;
     const response = await axiosInstance.post(
         postTokenUriAndIdURL, 

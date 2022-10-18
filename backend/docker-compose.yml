@@ -1,0 +1,19 @@
+version: "2"
+
+services:
+  valleyn-web3-test-server:
+    container_name: valleyn-web3-test-server
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    ports:
+      - 8081:8081
+
+    volumes:
+      - type: bind
+        source: .
+        target: /valleyn-web3-test-server
+      - /valleyn-web3-test-server/node_modules
+    command: npm run start:dev
+    environment:
+      PORT: 8081
