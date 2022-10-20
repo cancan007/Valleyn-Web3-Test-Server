@@ -18,7 +18,12 @@ export class Web3Service {
         private readonly ethersContract: EthersContract,  // already include BaseProvider
       ) {}
 
-    async getSigner():Promise<Wallet>{
+    getProvider():BaseProvider{
+        const provider = this.ethersProvider;
+        return provider;
+    }
+
+    getSigner():Wallet{
         //console.log(this.ethersProvider)
         const signer= this.ethersSigner.createWallet(configuration().PRIVATEKEY);
         //console.log(signer)

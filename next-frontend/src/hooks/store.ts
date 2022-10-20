@@ -1,12 +1,14 @@
 import {configureStore} from "@reduxjs/toolkit";
 import thunk from "redux-thunk";
 import { adminReducer } from "./admin/useAdminReducer";
+import { authenticationReducer } from "./authenticate/useAuthenticatinReducer";
 
 const middleware = [thunk];
 
 const store = configureStore({
     reducer:{
-        admin: adminReducer
+        admin: adminReducer,
+        auth: authenticationReducer
     },
     middleware
 })

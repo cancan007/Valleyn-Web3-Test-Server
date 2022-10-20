@@ -59,6 +59,32 @@ export class Web3Controller {
         return responses;
     }
 
+    @Get("items/:id")
+    async fetchItemsById(@Param("id") id:string):Promise<Array<Item & NftTokenUri & User>>{
+        const contract = await this.web3Service.getContract();
+        const items = await contract.fetchItemsById(id);
+        const response = await Promise.all(items.map(async(item:Item)=>{
+            const {tokenId, ic, ownerId, txTime} = item;
+            const tokenURI = await contract.tokenURI(tokenId)
+            return {tokenId, ic, ownerId, txTime, tokenURI}
+        }))
+        return response
+    }
+
+    @Get("tx-history/:ic")
+    async fetchEventsByIc(@Param("ic") ic:string){
+        const provider = this.web3Service.getProvider();
+        const contract = await this.web3Service.getContract();
+        const block = await provider.getBlockNumber();
+        const filters = contract.filters.Transaction(null,ic);
+        const events = await contract.queryFilter(filters, 0, block);
+        const argsArray = events.map((event:any,i:number)=>{
+            const {ic,currentOwnerId, txTime} = event.args
+            return {ic,currentOwnerId, txTime}
+        })
+        return argsArray
+    }
+
     @Post("create-token")
     async createToken(@Body() body:CreateToken):Promise<any>{
         const signer = await this.web3Service.getSigner();

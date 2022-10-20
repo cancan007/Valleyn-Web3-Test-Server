@@ -8,7 +8,7 @@ import { jsonHeader } from "src/utils/url/header";
 
 
 export interface getAllitemsSearchResult{
-    tokenId:BigInt;
+    tokenId:number;
     ic:string;
     ownerId:string;
     txTime:BigInt;

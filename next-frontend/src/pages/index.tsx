@@ -1,9 +1,21 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useAppSelector } from 'src/hooks/useGeneral'
 import styles from 'src/styles/Home.module.css'
 
+
 const Home: NextPage = () => {
+
+  const router = useRouter()
+  const auth = useAppSelector(state => state.auth);
+  if(!auth.name && router.isReady){
+      router.push({pathname:"/login"});
+      return(<></>)
+  } else if(!router.isReady){
+    return(<></>)
+  }else{
   return (
     <div className={styles.container}>
       <Head>
@@ -67,6 +79,7 @@ const Home: NextPage = () => {
       </footer>
     </div>
   )
+  }
 }
 
 export default Home

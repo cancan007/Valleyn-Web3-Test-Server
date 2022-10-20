@@ -2,11 +2,12 @@
 import { curryGetDefaultMiddleware } from "@reduxjs/toolkit/dist/getDefaultMiddleware";
 import ipfs from "ipfs-http-client";
 import { create as ipfsHttpClient} from "ipfs-http-client"  // to connect IPFS
-import {useEffect, useState} from "react";
+import { useRouter } from "next/router";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import { useDropzone } from "react-dropzone";
 import { useAPIPostTokenUriAndId } from "src/hooks/api/add-item/useAPIPostTokenUriAndId";
+import { useAppSelector } from "src/hooks/useGeneral";
 import { isReadable } from "stream";
-import { sendIPFSInfo } from "../../store/interactions";
 
 //const client = ipfsHttpClient("/ip4/127.0.0.1/tcp/5002")
 const client = ipfsHttpClient("/ip4/127.0.0.1/tcp/5001");
@@ -22,6 +23,8 @@ export const AddItemPage = () => {
     const [images, setImages] = useState<any>([]);
     const [info, setInfo] = useState<InfoType & any>();
     const [id, setId] = useState<string>();
+    const router = useRouter();
+    const auth = useAppSelector(state => state.auth);
     //const {acceptedFiles, getRootProps, getInputProps} = useDropzone();
 
     /*
@@ -55,7 +58,7 @@ export const AddItemPage = () => {
     })
 
     const upload = async()=>{
-        await addFile();
+        //await addFile();
         if(!info || !info.image || !info.name || !info.description || !id){
             console.log("Fill all forms")
             return;
@@ -63,8 +66,12 @@ export const AddItemPage = () => {
         const infoJson = JSON.stringify(info);
         const data = await client.add(infoJson);
         const url = `https://ipfs.io/ipfs/${data.cid}`;
-        console.log(url)
+        //console.log(url)
         postTokenUriAndUserId.mutate({tokenURI:url, id})
+        setInfo({...info, image:undefined, description:undefined});
+        setFile(undefined)
+        router.push({pathname:"/my-items"})
+        
         //await sendIPFSInfo(url, id)
     }
 
@@ -89,33 +96,47 @@ export const AddItemPage = () => {
             reader.readAsDataURL(file)
     }
 
-    useEffect(()=>{
+    
+    useEffect(()=>{ 
         readImage()
     },[file])
+
+    useEffect(()=>{
+        setId(auth.id);
+    },[auth.id])
+    
+    if(!auth.name && router.isReady){
+        router.push({pathname:"/login"});
+        return(<></>)
+    }else if(!router.isReady){
+        return(<></>)
+    }else {
 
   return (
     <div className="body w-screen">
     <header>
 
     </header>
-    <section className="flex flex-col items-center justify-center w-full">
+    <section className="flex flex-col items-center justify-center w-full h-4/5">
       {/*<div className="mt-10 w-[300px] h-[300px] rounded-full bg-gray-400" {...getRootProps()}>
         <input {...getInputProps()} />
   </div>*/}
-      
+      <div className="flex flex-col items-center justify-center gap-y-4">
       <input name="asset" id="asset" onChange={(e:any)=>setFile(e.target.files[0])} type="file" />
       {images.length > 0 && (
         images.map((image:any, i:number)=>(
             <img className="w-[200px] h-auto object-cover " key={i} src={image.src}/>
         ))
       )}
-      <input onChange={(e:any)=>setId(e.target.value)} type="text" placeholder="Your ID"/>
-      <input onChange={(e:any)=>setInfo({...info, name:e.target.value})} type="text" placeholder="name"/>
-      <input onChange={(e:any)=>setInfo({...info, description:e.target.value})} type="text" placeholder="description"/>
-      <button onClick={()=>upload()} className="border-2 rounded-lg px-3 py-1 text-white bg-blue-500 hover:bg-blue-300">Upload</button>
+      <input value={auth.id} onChange={(e:any)=>setId(e.target.value)} className="px-2 py-1" type="text" placeholder="Your ID"/>
+      <input onChange={(e:any)=>setInfo({...info, name:e.target.value})} className="px-2 py-1" type="text" placeholder="title"/>
+      <input onChange={(e:any)=>setInfo({...info, description:e.target.value})} className="px-2 py-1" type="text" placeholder="description"/>
+      <button onClick={()=>{addFile().then(()=>upload())}} className="border-2 rounded-lg px-3 py-1 text-white bg-blue-500 hover:bg-blue-300">Upload</button>
+      </div>
     </section>
    </div>
   )
+        }
 }
 
 export default AddItemPage;

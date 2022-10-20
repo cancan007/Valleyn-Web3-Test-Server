@@ -4,12 +4,17 @@ import Link from "next/link"
 import {Provider} from "react-redux"
 import store from 'src/hooks/store';
 import {QueryClient, QueryClientProvider} from "react-query"
+import {ChakraProvider} from "@chakra-ui/react";
+
 
 function MyApp({ Component, pageProps }: AppProps) {
 
+  
   const queryClient = new QueryClient();
+  
 
   return (
+    <ChakraProvider>
     <QueryClientProvider client={queryClient}>
     <Provider store={store}>
     <div>
@@ -39,9 +44,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         </div>
       </nav>
       <Component {...pageProps} />
-    </div>
+      </div>
     </Provider>
-    </QueryClientProvider>)
+    </QueryClientProvider>
+    </ChakraProvider>
+    )
 }
 
 export default MyApp

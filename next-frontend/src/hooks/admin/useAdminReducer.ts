@@ -4,7 +4,7 @@ type AdminState = {
 
 export const adminReducer = (state: AdminState = {}, action:AnyAction)=>{
     switch(action.type){
-        case "ADMIN_LOADED":
+        case "LOADED_ADMIN":
             return{
                 ...state,
                 contract:action.contract
