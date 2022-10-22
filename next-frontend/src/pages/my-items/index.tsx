@@ -27,7 +27,7 @@ const MyItems = () =>{
                 {
                     gettingItemsByUser?.map((item:getItemsByUserSearchResult, i:number)=>{
                         return(
-                            <Box key={i} className="rounded-lg border-2 border-gray-500 flex flex-col items-center justify-start h-[350px] overflow-y-auto cursor-pointer">
+                            <Box key={i} className="rounded-lg border-2 border-gray-200 flex flex-col items-center justify-start h-[350px] overflow-y-auto cursor-pointer">
                             <Image src={item.image} className="object-cover rounded-t-lg h-[200px] w-full"/>
                        <Text className="text-xl">{item.title}</Text>
                        <Text className="text-sm">description:{item.description}</Text>
