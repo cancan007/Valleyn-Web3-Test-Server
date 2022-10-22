@@ -3,9 +3,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectEthersProvider, BaseProvider, EthersSigner, Wallet, EthersContract, InjectSignerProvider, InjectContractProvider, Contract } from 'nestjs-ethers';
 import { configuration } from 'src/config/configuration';
-import * as mapJson from "../config/map.json";
-import * as ID from "../config/artifacts/contracts/ID.sol/ID.json";
-import * as VTAdmin from "../config/artifacts/contracts/VTAdmin.sol/VTAdmin.json";
+import * as mapJson from "../../config/map.json";
+import * as ID from "../../config/artifacts/contracts/ID.sol/ID.json";
+import * as VTAdmin from "../../config/artifacts/contracts/VTAdmin.sol/VTAdmin.json";
 
 @Injectable()
 export class Web3Service {

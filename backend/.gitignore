@@ -37,4 +37,4 @@ lerna-debug.log*
 development.env
 production.env
 
-compose
+/compose

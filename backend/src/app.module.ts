@@ -2,10 +2,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Web3Module } from './web3/web3.module';
+import { Web3Module } from './modules/web3/web3.module';
 import { EthersModule } from 'nestjs-ethers';
 import {ConfigModule} from "@nestjs/config"
 import { configuration } from './config/configuration';
+import { UserModule } from './modules/user/user.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as ormConfig from "../ormconfig"
 
 @Module({
   imports: [
@@ -14,7 +17,21 @@ import { configuration } from './config/configuration';
       load: [configuration],
       isGlobal: true
   }),
-    Web3Module],
+  TypeOrmModule.forRoot({
+    type: 'mysql',
+    host: configuration().DB_HOST,
+    port: 3306,
+    username: configuration().MYSQL_USER,
+    password: configuration().MYSQL_ROOT_PASSWORD,
+    database: configuration().MYSQL_DATABASE,
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    synchronize: true,
+    
+  }
+  //ormConfig
+  ),
+    Web3Module,
+    UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
