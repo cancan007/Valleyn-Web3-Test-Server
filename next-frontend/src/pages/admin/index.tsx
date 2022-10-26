@@ -13,7 +13,7 @@ export const Admin = () => {
   const handleJumpToItemDetail = (ic:string, item:ItemOrganizedType) =>{
     router.push({
         pathname:`/admin/item/[ic]`,
-        query: {ic, owner:item.name, ownerId:item.ownerId, title:item.title, description: item.description, image:item.image}
+        query: {ic, owner:item.name, ownerId:item.ownerId, title:item.title, description: item.description, image:item.image, images:item.images}
     })
   }
 
@@ -57,7 +57,7 @@ export const Admin = () => {
               const col = i%3;
               const row = Math.floor(i/3);*/
               return(<div key={i} onClick={()=>handleJumpToItemDetail(item.ic,item)} className="rounded-lg border-2 border-col-gray-500 flex flex-col items-center justify-start h-[350px] overflow-y-auto cursor-pointer">
-                       <img src={item.image} className="object-cover rounded-t-lg h-[200px] w-full"/>
+                       <img src={item.image ? item.image : item.images ? item.images[0] : ''} className="object-cover rounded-t-lg h-[200px] w-full"/>
                        <p className="text-xl">{item.title}</p>
                        <p className="text-sm">description:{item.description}</p>
                        <p className="text-sm">IC: {item.ic.slice(0, 6) + '...' + item.ic.slice(38, 42)}</p>

@@ -13,7 +13,7 @@ import { ItemOrganizedType } from "src/hooks/api/admin/useAPIGetAllitems"
 const ItemDetail = () =>{
 
     const router = useRouter()
-    const {ic, ownerId, owner, title, description, image} = router.query
+    const {ic, ownerId, owner, title, description, image, images} = router.query
     const {data:gettingTxHistory, refetch} = useAPIGetTxHistoryByIc({ic})
     console.log(gettingTxHistory)
 
@@ -24,7 +24,7 @@ const ItemDetail = () =>{
     return (
       <Box className="flex flex-col w-screen items-center text-black">
         <Box className="flex flex-row justify-center gap-x-5">
-          <Image src={image} className="h-[500px] w-auto object-cover"/>
+          <Image src={image ? image : images ? images[0] : ''} className="h-[500px] w-auto object-cover"/>
           <Box className="flex flex-col items-center justify-center gap-y-2">
                 <p className="text-xl">{title}</p>
                 <p className="text-sm">description:{description}</p>

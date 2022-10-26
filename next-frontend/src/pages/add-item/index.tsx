@@ -53,16 +53,6 @@ export const AddItemPage = () => {
         //await sendIPFSInfo(url, id)
     }
 
-    /*
-    const addFile = async()=>{
-        if(!file) return;
-        const result = await client.add(file)
-        //console.log(`https://ipfs.io/ipfs/${result.cid}`)
-        const url = `https://ipfs.io/ipfs/${result.cid}`;
-        setInfo((prevState:any)=>({ ...prevState,image:url}));
-        return result;
-    }*/
-
     const addImagesToIpfs = async() => {
         if(acceptedFiles.length === 0){
             alert("Please add item images");
