@@ -17,7 +17,8 @@ export interface getAllitemsSearchResult{
 }
 
 export interface MetaData{
-    image:string;
+    image?:string;
+    images?:Array<string>;
     name:string;
     description:string;
 }
@@ -38,8 +39,8 @@ const getAllitems = async()=>{
                 item.tokenURI
             )
             const {data}:{data:MetaData} = res;
-            const {name:title, description, image} = data;
-            return {...item, title, description, image}
+            const {name:title, description, image, images} = data;
+            return {...item, title, description, image, images}
         }catch{
             
         }

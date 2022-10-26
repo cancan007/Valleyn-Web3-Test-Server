@@ -7,7 +7,8 @@ interface User{
 }
 
 interface MetaData{
-    image:string;
+    image?:string;
+    images?:Array<string>;
     name:string;
     description:string;
 }

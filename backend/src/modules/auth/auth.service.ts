@@ -8,6 +8,7 @@ import bcrypt = require('bcrypt');
 
 export interface JwtPAYload {
   username: User['username'];
+  email: User['email'];
   id: User['id'];
 }
 
@@ -29,11 +30,13 @@ export class AuthService {
     return null;
   }
 
-  async generateJwtToken(user: Omit<User, 'password'>) {
-    const payload: JwtPAYload = { username: user.username, id: user.id };
-
-    return {
-      access_token: this.jwtService.sign(payload),
+  generateJwtToken(user: Omit<User, 'password'>) {
+    const payload: JwtPAYload = {
+      username: user.username,
+      email: user.email,
+      id: user.id,
     };
+    const access_token = this.jwtService.sign(payload);
+    return { access_token };
   }
 }
