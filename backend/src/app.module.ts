@@ -8,6 +8,7 @@ import {ConfigModule} from "@nestjs/config"
 import { configuration } from './config/configuration';
 import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './modules/auth/auth.module';
 import * as ormConfig from "../ormconfig"
 
 @Module({
@@ -22,7 +23,7 @@ import * as ormConfig from "../ormconfig"
     host: configuration().DB_HOST,
     port: 3306,
     username: configuration().MYSQL_USER,
-    password: configuration().MYSQL_ROOT_PASSWORD,
+    password: configuration().MYSQL_PASSWORD,
     database: configuration().MYSQL_DATABASE,
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
@@ -31,7 +32,8 @@ import * as ormConfig from "../ormconfig"
   //ormConfig
   ),
     Web3Module,
-    UserModule],
+    UserModule,
+    AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

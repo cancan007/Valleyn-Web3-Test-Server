@@ -6,6 +6,7 @@ import { configuration } from 'src/config/configuration';
 import * as mapJson from "../../config/map.json";
 import * as ID from "../../config/artifacts/contracts/ID.sol/ID.json";
 import * as VTAdmin from "../../config/artifacts/contracts/VTAdmin.sol/VTAdmin.json";
+import { CreateUser } from './dto/web3.dto';
 
 @Injectable()
 export class Web3Service {
@@ -35,5 +36,14 @@ export class Web3Service {
         const chainKey = chainId as unknown as keyof typeof mapJson
         const contract = this.ethersContract.create(mapJson[chainKey]["VTAdmin"].slice(-1)[0], VTAdmin.abi);
         return contract;
+    }
+
+    async createUser(username:string):Promise<CreateUser>{
+        const signer = this.getSigner();
+        const contract = await this.getContract();
+        const tx = await contract.connect(signer).addUser(username);
+        const event = await tx.wait();
+        const {userNum, userId, name, addedTime} = event.events[0].args;
+        return {userNum, userId, name, addedTime};
     }
 };

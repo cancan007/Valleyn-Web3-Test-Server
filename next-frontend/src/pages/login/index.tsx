@@ -29,15 +29,18 @@ const Login = () =>{
         </Head>
         <Box className="flex flex-col items-center h-full">
            <Text className="text-2xl">ログイン</Text>
-           <Box className="flex flex-col">
-             <Text>Name</Text>
+           <Box className="flex flex-col mt-4">
+             <Text className='text-sm'>ユーザーネーム</Text>
              <Input onChange={(e:any)=>setName(e.target.value)} type="text" className="rounded-lg"/>
            </Box>
-           <Box className="flex flex-col">
-            <Text>ID</Text>
+           <Box className="flex flex-col my-2">
+            <Text className="text-sm">ユーザーID</Text>
             <Input onChange={(e:any) => setId(e.target.value)} type="text" className="rounded-lg"/>
            </Box>
            <Button onClick={name && id ? ()=>loadAuth(dispatch,name, id) : () =>{}} colorScheme={"blue"} variant={"outline"}>Login</Button>
+           <Box className="flex flex-row text-sm mt-2">
+           <Text>ユーザー登録をしていない方はこちらから---{'>'}</Text><Text onClick={() => router.push({pathname: '/signup'})} className="text-blue-500 hover:text-blue-200 cursor-pointer">サインアップ</Text>
+           </Box>
         </Box>
       </Box>
     )

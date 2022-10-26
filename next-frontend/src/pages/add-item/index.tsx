@@ -19,7 +19,7 @@ type InfoType = {
 }
 
 export const AddItemPage = () => {
-    const [file, setFile] = useState();
+    const [file, setFile] = useState<File>();
     const [images, setImages] = useState<any>([]);
     const [info, setInfo] = useState<InfoType & any>();
     const [id, setId] = useState<string>();
@@ -54,6 +54,9 @@ export const AddItemPage = () => {
     const postTokenUriAndUserId = useAPIPostTokenUriAndId({
         onSuccess:(result)=>{
             alert(result)
+            setInfo({...info, image:undefined, description:undefined});
+            setFile(undefined)
+            router.push({pathname:"/my-items"})
         }
     })
 
@@ -68,9 +71,7 @@ export const AddItemPage = () => {
         const url = `https://ipfs.io/ipfs/${data.cid}`;
         //console.log(url)
         postTokenUriAndUserId.mutate({tokenURI:url, id})
-        setInfo({...info, image:undefined, description:undefined});
-        setFile(undefined)
-        router.push({pathname:"/my-items"})
+        
         
         //await sendIPFSInfo(url, id)
     }

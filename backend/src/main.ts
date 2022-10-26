@@ -18,6 +18,6 @@ async function bootstrap() {
       allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
   }*/); // protection
   }
-  await app.listen(process.env.PORT || 3002);
+  await app.listen(process.env.PORT || 8081);
 }
 bootstrap();
