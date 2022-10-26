@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configuration } from 'src/config/configuration';
+import { Web3Module } from '../web3/web3.module';
+import { Web3Service } from '../web3/web3.service';
 import { User } from './entity/user.entity';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
@@ -11,10 +13,12 @@ import { UserService } from './user.service';
     ConfigModule.forRoot({
       envFilePath: `src/config/env/${process.env.NODE_ENV}.env`,
       load: [configuration],
-      isGlobal: true
-  }),
-    TypeOrmModule.forFeature([User])],
+      isGlobal: true,
+    }),
+    Web3Module,
+    TypeOrmModule.forFeature([User]),
+  ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, Web3Service],
 })
 export class UserModule {}
