@@ -15,6 +15,7 @@ export interface getItemsByUserSearchResult{
     title?:string;
     description?:string;
     image?:string;
+    images?:Array<string>;
 }
 
 
@@ -30,8 +31,8 @@ const getItemsByUser = async(ID:string) =>{
                 item.tokenURI
             )
             const {data}:{data:MetaData} = res;
-            const {name:title, description, image} = data;
-            return {...item, title, description, image}
+            const {name:title, description, image, images} = data;
+            return {...item, title, description, image, images}
         }catch{
             
         }

@@ -1,14 +1,10 @@
 import { Alert } from "@chakra-ui/react";
 import { getUserById } from "../api/login/useAPIGetUserById";
+import { LoginUserResultType } from "../api/login/usepostLoginUser";
 import { AppDispatch } from "../store";
 
 
 
-export const loadAuth = async(dispatch:AppDispatch, name:string, id:string)=>{
-  const {name:userName, id:userId} = await getUserById(id)
-  if(name === userName && id === userId){
-    dispatch({type:"LOADED_AUTHENTICATION", name, id})
-  }else{
-    console.log("Invalid name and userID")
-  }
+export const loadAuth = (dispatch:AppDispatch, user: LoginUserResultType)=>{
+  dispatch({type:"LOADED_AUTHENTICATION", name: user.username, id:user.id, email:user.email, access_token: user.access_token})
 }

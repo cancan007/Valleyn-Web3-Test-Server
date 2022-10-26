@@ -11,6 +11,7 @@ export class AuthController {
   @Post('login')
   async login(@Request() req: { user: PasswordOmitUser }) {
     const user = req.user;
-    return this.authService.generateJwtToken(user);
+    const { access_token } = this.authService.generateJwtToken(user);
+    return { ...user, access_token };
   }
 }

@@ -17,10 +17,10 @@ export class LocalStrategy extends PassportStrategy(BaseLocalStrategy) {
   //UseGuards(AuthGuard('local'))でmiddlerwareのように認証を行うことが可能
 
   async validate(
-    name: User['username'],
-    pass: User['password'],
+    username: User['username'],
+    password: User['password'],
   ): Promise<PasswordOmitUser> {
-    const user = await this.authService.validateUser(name, pass);
+    const user = await this.authService.validateUser(username, password);
 
     if (!user) {
       throw new UnauthorizedException();

@@ -2,7 +2,9 @@ import { AnyAction } from "redux"
 
 type AuthenticationState = {
     name?:string,
-    id?:string
+    id?:string,
+    email?:string,
+    access_token?:string
 }
 
 export const authenticationReducer = (state: AuthenticationState = {}, action:AnyAction)=>{
@@ -10,7 +12,9 @@ export const authenticationReducer = (state: AuthenticationState = {}, action:An
         case "LOADED_AUTHENTICATION":
             return{
                 name:action.name,
-                id:action.id
+                id:action.id,
+                email:action.email,
+                access_token:action.access_token
             }
         default:
             return state
