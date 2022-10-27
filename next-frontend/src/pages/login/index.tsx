@@ -1,9 +1,9 @@
 import { Box , Button, Input, Text} from "@chakra-ui/react"
 import Head from "next/head"
 import { useRouter } from "next/router";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePostLoginUser } from "src/hooks/api/login/usepostLoginUser";
-import { loadAuth } from "src/hooks/authenticate/useAuthInteractions";
+import { deleteAuth, loadAuth } from "src/hooks/authenticate/useAuthInteractions";
 import { useAppDispatch, useAppSelector } from "src/hooks/useGeneral"
 
 
@@ -31,7 +31,6 @@ const Login = () =>{
       }
       mutateLoginUser({username, password});
     }
-
 
     if(auth.id && auth.name){
         router.push({pathname: "/"})

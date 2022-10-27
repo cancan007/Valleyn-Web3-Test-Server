@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AddUser, ChangeOwner, CreateToken } from './dto/web3.dto';
 import { Item, NftTokenUri, User } from './entity/web3.entity';
 import { Web3Service } from './web3.service';
@@ -8,7 +10,7 @@ import { Web3Service } from './web3.service';
 export class Web3Controller {
     constructor(private web3Service:Web3Service){}
 
-
+    @UseGuards(JwtAuthGuard)
     @Get("users")
     async fetchAllUserInfo():Promise<Array<User>>{
         const signer = await this.web3Service.getSigner();
@@ -59,6 +61,7 @@ export class Web3Controller {
         return responses;
     }
 
+    @UseGuards(JwtAuthGuard)
     @Get("items/:id")
     async fetchItemsById(@Param("id") id:string):Promise<Array<Item & NftTokenUri & User>>{
         const contract = await this.web3Service.getContract();

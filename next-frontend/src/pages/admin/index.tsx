@@ -28,7 +28,7 @@ export const Admin = () => {
 
       </header>
       <section className="flex flex-col items-center w-screen">
-        <div className="flex flex-col w-4/5">
+        <div className="flex flex-col h-[400px] w-4/5 overflow-y-auto">
           <p className="text-xl">All Users</p>
           {gettingAllUsers && gettingAllUsers.map((user:any, i:number)=>(
             <div key={i} className="flex flex-col w-full mt-2 border-2 border-gray-400 ">

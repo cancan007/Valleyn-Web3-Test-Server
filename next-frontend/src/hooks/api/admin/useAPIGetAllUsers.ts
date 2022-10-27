@@ -8,7 +8,7 @@ const getAllUsers = async()=>{
     const headers = jsonHeader;
     const response = await axiosInstance.get(
       getAllUsersUrl,
-      {headers}
+      //{headers}
     )
     return response.data
 }

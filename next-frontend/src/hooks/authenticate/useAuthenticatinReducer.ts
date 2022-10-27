@@ -16,6 +16,8 @@ export const authenticationReducer = (state: AuthenticationState = {}, action:An
                 email:action.email,
                 access_token:action.access_token
             }
+        case "DELETE_AUTHENTICATION":
+            return{}
         default:
             return state
     }

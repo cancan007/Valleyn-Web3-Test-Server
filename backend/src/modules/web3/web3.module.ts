@@ -5,6 +5,8 @@ import { configuration } from 'src/config/configuration';
 import { Web3Controller } from './web3.controller';
 import { Web3Service } from './web3.service';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from '../auth/auth.module';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 
 @Module({
@@ -27,6 +29,6 @@ import { ConfigModule } from '@nestjs/config';
     }
   )],
   controllers: [Web3Controller],
-  providers: [Web3Service]
+  providers: [Web3Service, JwtAuthGuard]
 })
 export class Web3Module {}

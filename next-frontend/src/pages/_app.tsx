@@ -4,45 +4,23 @@ import Link from "next/link"
 import {Provider} from "react-redux"
 import store from 'src/hooks/store';
 import {QueryClient, QueryClientProvider} from "react-query"
-import {ChakraProvider} from "@chakra-ui/react";
+import {Box, ChakraProvider, Text} from "@chakra-ui/react";
+import { useAppDispatch } from 'src/hooks/useGeneral';
+import { deleteAuth } from 'src/hooks/authenticate/useAuthInteractions';
+import { Header } from 'src/components/common/Header';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   
   const queryClient = new QueryClient();
-  
 
   return (
     <ChakraProvider>
     <QueryClientProvider client={queryClient}>
     <Provider store={store}>
     <div>
-      <nav className='border-b p-6'>
-        <p className="text-4xl font-bold p-5">Valleyin Auction</p>
-        <div className='flex mt-4'>
-          <Link href="/">
-            <a className='mr-6 text-pink-500'>
-              Home
-            </a>
-          </Link>
-          <Link href="/add-item">
-            <a className='mr-6 text-pink-500'>
-              Add Item
-            </a>
-          </Link>
-          <Link href="/my-items">
-            <a className='mr-6 text-pink-500'>
-              My Items
-            </a>
-          </Link>
-          <Link href="/admin">
-          <a className='mr-6 text-pink-500'>
-            Admin
-          </a>
-          </Link>
-        </div>
-      </nav>
+      <Header/>
       <Component {...pageProps} />
       </div>
     </Provider>

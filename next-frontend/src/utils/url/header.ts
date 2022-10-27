@@ -1,9 +1,12 @@
+import { useAppSelector } from "src/hooks/useGeneral";
+
 const tokenString = (): string => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('userToken') || '';
     }
     return '';
   };
+
   export const jsonHeader = {
     'Content-Type': 'application/json',
   };
