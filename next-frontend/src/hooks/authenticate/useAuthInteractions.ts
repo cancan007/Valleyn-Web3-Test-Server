@@ -1,5 +1,5 @@
 import { Alert } from "@chakra-ui/react";
-import { getUserById } from "../api/login/useAPIGetUserById";
+import { getUserById } from "../api/admin/item/useAPIGetUserById";
 import { LoginUserResultType } from "../api/login/usepostLoginUser";
 import { AppDispatch } from "../store";
 

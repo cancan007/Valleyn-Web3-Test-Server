@@ -7,6 +7,7 @@ import * as mapJson from "../../config/map.json";
 import * as ID from "../../config/artifacts/contracts/ID.sol/ID.json";
 import * as VTAdmin from "../../config/artifacts/contracts/VTAdmin.sol/VTAdmin.json";
 import { CreateUser } from './dto/web3.dto';
+import { User } from '../user/entity/user.entity';
 
 @Injectable()
 export class Web3Service {
@@ -45,5 +46,12 @@ export class Web3Service {
         const event = await tx.wait();
         const {userNum, userId, name, addedTime} = event.events[0].args;
         return {userNum, userId, name, addedTime};
+    }
+
+    async fetchUserById(id:string):Promise<User>{
+        const contract = await this.getContract();
+        const user = await contract.fetchUserById(id);
+        const {...args} = user;
+        return args;
     }
 };

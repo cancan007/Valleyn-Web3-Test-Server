@@ -4,6 +4,7 @@ import { jsonHeader } from "src/utils/url/header";
 import {BigNumber, ethers} from "ethers";
 import moment from "moment";
 import { useQuery } from "react-query";
+import { getUserById } from "./useAPIGetUserById";
 
 
 
@@ -12,6 +13,7 @@ export interface getTxHistoryByIcSearchResult{
     currentOwnerId: string;
     txTime: any;
     time?: string;
+    name?:string;
 }
 
 const getTxHistoryByIc = async(ic:string) => {
@@ -20,11 +22,12 @@ const getTxHistoryByIc = async(ic:string) => {
     getTxHistoryByIcUrl + `/${ic}`,
     {headers}
   )
-  let res = response.data.map((arg:getTxHistoryByIcSearchResult,i:number)=>{
+  let res =await Promise.all(response.data.map(async(arg:getTxHistoryByIcSearchResult,i:number)=>{
     //console.log(parseInt(arg.txTime.hex, 16))
     const time = moment.unix(parseInt(arg.txTime.hex, 16)).format("YYYY-MM-DD HH:mm:ssZ");
-    return {...arg, time}
-  })
+    const user = await getUserById(arg.currentOwnerId);
+    return {...arg, time, name:user.name}
+  }));
   res = res.sort((a:getTxHistoryByIcSearchResult,b:getTxHistoryByIcSearchResult) => b.txTime.hex - a.txTime.hex);
   return res
 }

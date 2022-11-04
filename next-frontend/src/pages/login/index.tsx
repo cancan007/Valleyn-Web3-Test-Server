@@ -7,9 +7,6 @@ import { deleteAuth, loadAuth } from "src/hooks/authenticate/useAuthInteractions
 import { useAppDispatch, useAppSelector } from "src/hooks/useGeneral"
 
 
-
-
-
 const Login = () =>{
     const router = useRouter();
     const dispatch = useAppDispatch();
