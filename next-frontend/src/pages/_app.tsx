@@ -7,7 +7,8 @@ import {QueryClient, QueryClientProvider} from "react-query"
 import {Box, ChakraProvider, Text} from "@chakra-ui/react";
 import { useAppDispatch } from 'src/hooks/useGeneral';
 import { deleteAuth } from 'src/hooks/authenticate/useAuthInteractions';
-import { Header } from 'src/components/common/Header';
+import { Header } from 'src/components/common/Header/Header';
+import React from 'react';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
 
   return (
+    <React.StrictMode>
     <ChakraProvider>
     <QueryClientProvider client={queryClient}>
     <Provider store={store}>
@@ -26,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     </Provider>
     </QueryClientProvider>
     </ChakraProvider>
+    </React.StrictMode>
     )
 }
 

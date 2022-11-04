@@ -23,24 +23,24 @@ export const Admin = () => {
   },[gettingAllUsers,gettingAllitems])
 
   return (
-    <div>
+    <div className="flex flex-col">
       <header>
 
       </header>
-      <section className="flex flex-col items-center w-screen">
-        <div className="flex flex-col h-[400px] w-4/5 overflow-y-auto">
-          <p className="text-xl">All Users</p>
+      <section className="flex flex-col items-center w-3/5 self-center mt-5">
+      <p className="text-xl self-start">All Users</p>
+        <div className="flex flex-col h-[400px] w-full overflow-y-auto">
           {gettingAllUsers && gettingAllUsers.map((user:any, i:number)=>(
             <div key={i} className="flex flex-col w-full mt-2 border-2 border-gray-400 ">
                <div className="flex flex-row w-full">
-                <div className="bg-gray-400 w-1/4">
+                <div className="bg-gray-400 min-w-[100px] w-1/6">
                   <p className="text-white text-center">name</p>
                 </div>
                 <p>{user.name}</p>
               </div>
               <hr/>
-              <div className="flex flex-row w-full">
-                <div className="bg-gray-400 w-1/4">
+              <div className="flex flex-row w-full overflow-x-auto scroll-smooth">
+                <div className="bg-gray-400 min-w-[100px] w-1/6">
                   <p className="text-white text-center">ID</p>
                 </div>
                 <p className="text-sm">{user.userId}</p>
@@ -49,9 +49,9 @@ export const Admin = () => {
           ))}
         
         </div>
-        <div className='flex flex-col w-4/5'>
-          <p className="text-xl">All Items</p>
-          <div className="w-full grid-cols-1 sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        <div className='flex flex-col w-full mt-5'>
+        <p className="text-xl">All Items</p>
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {gettingAllitems && gettingAllitems.map((item:ItemOrganizedType, i:number)=>{
               /*let num = i+1;
               const col = i%3;
