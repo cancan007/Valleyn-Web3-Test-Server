@@ -16,10 +16,10 @@ const ItemDetail = () =>{
 
     return (
       <Box className="w-screen flex flex-col items-center">
-      <Box className="w-3/5  text-black">
+      <Box className="w-3/5  flex flex-col items-center text-black">
         <Box className="flex flex-col lg:flex-row justify-center items-center gap-x-5 p-10">
         {
-            image && !images ? (<Image src={image} className="aspect-auto w-[300px] object-cover"/>)
+            image && !images ? (<Image src={image} className="aspect-auto h-[500px] object-cover"/>)
             : !image && images ? (
                 <Box className="grid grid-cols-3 lg:grid-cols-3 gap-1">
                 {
@@ -31,7 +31,7 @@ const ItemDetail = () =>{
             )
             : <></>
         }
-          <Box className="flex flex-col items-start justify-center gap-y-2">
+          <Box className="flex flex-col lg:items-start justify-center gap-y-2">
                 <p className="text-xl">{title}</p>
                 <p className="text-sm">description:{description}</p>
                 <p className="text-sm">IC: {ic}</p>
